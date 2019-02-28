@@ -6086,12 +6086,12 @@ const controls = {
 let screenQuad;
 let time = 0.0;
 // Import object meshes
-let branch = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let fruit = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/heart.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let leaf = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/leaf.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let pot = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/pot.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let soil = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let wood = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('../resources/obj/cube.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let branch = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let fruit = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let leaf = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/leaf.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let pot = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/pot.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let soil = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let wood = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cube.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
 let bcount, fcount, lcount;
 // Set up expansion rules
 let expansionRules = new Map();

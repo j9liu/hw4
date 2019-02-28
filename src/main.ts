@@ -22,7 +22,7 @@ const controls = {
 
 let screenQuad : ScreenQuad;
 let time : number = 0.0;
- ,
+
 // Import object meshes
 let branch : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
 let fruit  : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), vec3.fromValues(0, 0, 0));
