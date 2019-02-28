@@ -18,3 +18,11 @@ The background
 ![](background.png)
 
 ![](pot.png)
+
+![](branches.png)
+
+![](angle0.png)
+
+![](angle20.png)
+
+![](scaling.png)
