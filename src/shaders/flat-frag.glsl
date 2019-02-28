@@ -9,5 +9,5 @@ in vec2 fs_Pos;
 out vec4 out_Col;
 
 void main() {
-  out_Col = vec4(0.5 * (fs_Pos + vec2(1.0)), 0.0, 1.0);
+  out_Col = vec4(mix(vec3(255., 247., 216.) / 255., vec3(140., 234., 229.) / 255., cos(fs_Pos.x) + fs_Pos.y), 1.);
 }

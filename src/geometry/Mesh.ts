@@ -11,6 +11,11 @@ class Mesh extends Drawable {
   uvs: Float32Array;
   center: vec4;
 
+  transcol1: Float32Array; // Data for bufTransform1
+  transcol2: Float32Array; // Data for bufTransform2
+  transcol3: Float32Array; // Data for bufTransform3
+  transcol4: Float32Array; // Data for bufTransform4
+
   objString: string;
 
   constructor(objString: string, center: vec3) {
@@ -59,6 +64,11 @@ class Mesh extends Drawable {
     this.generateUV();
     this.generateCol();
 
+    this.generateTransform1();
+    this.generateTransform2();
+    this.generateTransform3();
+    this.generateTransform4();
+
     this.count = this.indices.length;
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.bufIdx);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, this.indices, gl.STATIC_DRAW);
@@ -75,8 +85,40 @@ class Mesh extends Drawable {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.bufUV);
     gl.bufferData(gl.ARRAY_BUFFER, this.uvs, gl.STATIC_DRAW);
 
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform1);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol1, gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform2);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol2, gl.STATIC_DRAW);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform3);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol3, gl.STATIC_DRAW);
+    
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform4);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol4, gl.STATIC_DRAW);
+
     console.log(`Created Mesh from OBJ`);
     this.objString = ""; // hacky clear
+  }
+
+  setInstanceVBOs(col1s: Float32Array, col2s: Float32Array, col3s: Float32Array, col4s: Float32Array,
+                  colors: Float32Array) {
+    this.colors = colors;
+    this.transcol1 = col1s;
+    this.transcol2 = col2s;
+    this.transcol3 = col3s;
+    this.transcol4 = col4s;
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufCol);
+    gl.bufferData(gl.ARRAY_BUFFER, this.colors, gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform1);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol1, gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform2);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol2, gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform3);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol3, gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bufTransform4);
+    gl.bufferData(gl.ARRAY_BUFFER, this.transcol4, gl.STATIC_DRAW);
   }
 };
 
