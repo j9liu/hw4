@@ -24,12 +24,12 @@ let screenQuad : ScreenQuad;
 let time : number = 0.0;
 
 // Import object meshes
-let branch : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
-let fruit  : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), vec3.fromValues(0, 0, 0));
-let leaf   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/leaf.obj'), vec3.fromValues(0, 0, 0));
-let pot    : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/pot.obj'), vec3.fromValues(0, 0, 0));
-let soil   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
-let wood   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cube.obj'), vec3.fromValues(0, 0, 0));
+let branch : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
+let fruit  : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), vec3.fromValues(0, 0, 0));
+let leaf   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/leaf.obj'), vec3.fromValues(0, 0, 0));
+let pot    : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/pot.obj'), vec3.fromValues(0, 0, 0));
+let soil   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
+let wood   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cube.obj'), vec3.fromValues(0, 0, 0));
 
 let bcount : number,
     fcount : number,
