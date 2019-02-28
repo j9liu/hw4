@@ -14,3 +14,7 @@ https://j9liu.github.io/hw4/
 # Features
 
 The background
+
+![](background.png)
+
+![](pot.png)
