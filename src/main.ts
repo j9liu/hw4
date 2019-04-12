@@ -8,9 +8,9 @@ import Camera from './Camera';
 import {setGL} from './globals';
 import {readTextFile} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
-import Turtle from './Turtle';
-import ExpansionRule from './ExpansionRule';
-import DrawingRule from './DrawingRule';
+import Turtle from './lsystem/Turtle';
+import ExpansionRule from './lsystem/ExpansionRule';
+import DrawingRule from './lsystem/DrawingRule';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
@@ -18,18 +18,19 @@ const controls = {
   angle: 15,
   iterations: 5,
   fruit_color: [232, 216, 81],
+  'Generate': loadScene
 };
 
 let screenQuad : ScreenQuad;
 let time : number = 0.0;
 
 // Import object meshes
-let branch : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
-let fruit  : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), vec3.fromValues(0, 0, 0));
-let leaf   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/leaf.obj'), vec3.fromValues(0, 0, 0));
-let pot    : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/pot.obj'), vec3.fromValues(0, 0, 0));
-let soil   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
-let wood   : Mesh = new Mesh(readTextFile('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cube.obj'), vec3.fromValues(0, 0, 0));
+let branch : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
+let fruit  : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/heart.obj'), vec3.fromValues(0, 0, 0));
+let leaf   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/leaf.obj'), vec3.fromValues(0, 0, 0));
+let pot    : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/pot.obj'), vec3.fromValues(0, 0, 0));
+let soil   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cylinder.obj'), vec3.fromValues(0, 0, 0));
+let wood   : Mesh = new Mesh(readTextFile('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cube.obj'), vec3.fromValues(0, 0, 0));
 
 let bcount : number,
     fcount : number,
@@ -92,7 +93,18 @@ function popTurtle() {
   turtle.depth -= 1;
 }
 
+function insidePot(position: vec3) : boolean {
+  return position[0] > -1 && position[0] < -1 && position[1] > -3.4 && position[1] < -2.4;
+}
+
+function underWood(position: vec3) : boolean {
+  return position[0] > -4.5 && position[0] < 4.5 && position[1] < -3.4;
+}
+
 function pushBranch(scale : vec3) {
+  if(insidePot(turtle.position) || underWood(turtle.position)) {
+    return;
+  }
   // Calculate transformation
   let transform : mat4 = mat4.create();
   let q : quat = quat.create();
@@ -113,6 +125,9 @@ function pushBranch(scale : vec3) {
 }
 
 function drawStraight() {
+  if(insidePot(turtle.position) || underWood(turtle.position)) {
+    return;
+  }
   turtle.moveForward(0.25);
   pushBranch(vec3.fromValues(0.15 - turtle.depth * 0.04, 0.25,
                              0.15 - turtle.depth * 0.04));
@@ -120,6 +135,9 @@ function drawStraight() {
 
 function drawCurved() {
   for(let i = 0; i < 4; i++) {
+    if(insidePot(turtle.position) || underWood(turtle.position)) {
+      return;
+    }
     turtle.moveForward(0.1);
     turtle.rotate(5, 0,  -5);
     turtle.moveForward(0.1);
@@ -142,7 +160,7 @@ function rotateTurtleNeg() {
 }
 
 function putFruit() {
-  if(turtle.depth < 3) {
+  if(turtle.depth < 3 || underWood(turtle.position) || insidePot(turtle.position)) {
     return;
   }
   let scale = -0.5 / (2 - turtle.depth);
@@ -167,6 +185,9 @@ function putFruit() {
 }
 
 function putLeaf() {
+  if(underWood(turtle.position) || insidePot(turtle.position)) {
+    return;
+  }
   let transform : mat4 = mat4.create();
   mat4.fromTranslation(transform, turtle.position);
   let q : quat = quat.create();
@@ -217,7 +238,32 @@ function createMeshes() {
   wood.create();
 }
 
+let axioms : Array<string>;
+
 function loadScene() {
+  // Initial grammar
+  let str : string = 'SSSF';
+  axioms = [str];
+  
+  // Expand the grammar
+  for(let i = 0; i < 6; i++) {
+    let newstr : string = '';
+    for(let j = 0; j < str.length; j++) {
+      let result = expansionRules.get(str.charAt(j));
+      if(result) {
+        newstr += result.getOutcome();
+      } else {
+        newstr += str.charAt(j);
+      }
+    }
+    axioms.push(newstr);
+    str = newstr;
+  }
+
+  drawGrammar();
+}
+
+function drawGrammar() {
   // Reset turtle
   turtle.position = vec3.fromValues(0, -2.8, 0);
   turtle.orientation = vec3.fromValues(0, 1, 0);
@@ -247,26 +293,9 @@ function loadScene() {
   leafTCol4Array = [];
   leafColorsArray = [];
 
-  // Initial grammar
-  let str : string = 'SSSF';
-  
-  // Expand the grammar
-  for(let i = 0; i < controls.iterations; i++) {
-    let newstr : string = '';
-    for(let j = 0; j < str.length; j++) {
-      let result = expansionRules.get(str.charAt(j));
-      if(result) {
-        newstr += result.getOutcome();
-      } else {
-        newstr += str.charAt(j);
-      }
-    }
-    str = newstr;
-  }
-
-  // Draw based on final grammar
-  for(let i = 0; i < str.length; i++) {
-    let func = drawingRules.get(str.charAt(i)).getOutcome();
+  // Draw based on grammar
+  for(let i = 0; i < axioms[controls.iterations].length; i++) {
+    let func = drawingRules.get(axioms[controls.iterations].charAt(i)).getOutcome();
     if(func) {
       func();
     }
@@ -309,7 +338,7 @@ function loadScene() {
                        new Float32Array([0, -2.5, 0, 1]),
                        new Float32Array([43. / 255., 26. / 255., 3. / 255., 1]));
   soil.setNumInstances(1);
-  wood.setInstanceVBOs(new Float32Array([4, 0, 0, 0]),
+  wood.setInstanceVBOs(new Float32Array([10, 0, 0, 0]),
                        new Float32Array([0, 0.2, 0, 0]),
                        new Float32Array([0, 0, 4, 0]),
                        new Float32Array([0, -4.2, 0, 1]),
@@ -336,6 +365,7 @@ function main() {
   gui.add(controls, 'angle', 0, 30).step(1);
   gui.add(controls, 'iterations', 0, 6).step(1);
   gui.addColor(controls, 'fruit_color');
+  gui.add(controls, 'Generate');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -375,7 +405,7 @@ function main() {
   // This function will be called every frame
   function tick() {
     if(old_angle != controls.angle || old_iterations != controls.iterations) {
-      loadScene();
+      drawGrammar();
       old_angle = controls.angle;
       old_iterations = controls.iterations;
     }

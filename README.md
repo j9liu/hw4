@@ -9,7 +9,7 @@ In addition to the class lectures and powerpoints, I consulted a few external re
 - https://www.turbosquid.com/3d-models/pot-garden-ma-free/957561, for the pot model
 
 # Live GitHub demo
-https://j9liu.github.io/hw4/
+https://j9liu.github.io/plant/
 
 # L-System Ruleset
 
