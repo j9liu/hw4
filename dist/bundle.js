@@ -6060,9 +6060,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Camera__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__globals__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__rendering_gl_ShaderProgram__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Turtle__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ExpansionRule__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__DrawingRule__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__lsystem_Turtle__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__lsystem_ExpansionRule__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__ = __webpack_require__(72);
 
 
 
@@ -6082,45 +6082,46 @@ const controls = {
     angle: 15,
     iterations: 5,
     fruit_color: [232, 216, 81],
+    'Generate': loadScene
 };
 let screenQuad;
 let time = 0.0;
 // Import object meshes
-let branch = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let fruit = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/heart.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let leaf = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/leaf.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let pot = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/pot.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let soil = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
-let wood = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('http://raw.githubusercontent.com/j9liu/hw4/master/resources/obj/cube.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let branch = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let fruit = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/heart.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let leaf = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/leaf.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let pot = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/pot.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let soil = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cylinder.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
+let wood = new __WEBPACK_IMPORTED_MODULE_3__geometry_Mesh__["a" /* default */](Object(__WEBPACK_IMPORTED_MODULE_7__globals__["b" /* readTextFile */])('https://raw.githubusercontent.com/j9liu/plant/master/resources/obj/cube.obj'), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 0, 0));
 let bcount, fcount, lcount;
 // Set up expansion rules
 let expansionRules = new Map();
-let er1 = new __WEBPACK_IMPORTED_MODULE_10__ExpansionRule__["a" /* default */]();
+let er1 = new __WEBPACK_IMPORTED_MODULE_10__lsystem_ExpansionRule__["a" /* default */]();
 er1.addOutcome('S-[SSSSLF]+S', 0.25);
 er1.addOutcome('[+SSSCLF]-CSSSLF', 0.75);
 expansionRules.set('F', er1);
-let er2 = new __WEBPACK_IMPORTED_MODULE_10__ExpansionRule__["a" /* default */]();
+let er2 = new __WEBPACK_IMPORTED_MODULE_10__lsystem_ExpansionRule__["a" /* default */]();
 er2.addOutcome('SS+SL', 0.1);
 er2.addOutcome('S+SLF', 0.1);
 er2.addOutcome('S', 0.8);
 expansionRules.set('S', er2);
 // Set up drawing rules
 let drawingRules = new Map();
-let push = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let push = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 push.addOutcome(pushTurtle, 1.0);
-let pop = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let pop = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 pop.addOutcome(popTurtle, 1.0);
-let rotatePos = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let rotatePos = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 rotatePos.addOutcome(rotateTurtlePos, 1.0);
-let rotateNeg = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let rotateNeg = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 rotateNeg.addOutcome(rotateTurtleNeg, 1.0);
-let pfruit = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let pfruit = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 pfruit.addOutcome(putFruit, 1.0);
-let pleaf = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let pleaf = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 pleaf.addOutcome(putLeaf, 0.6);
-let straight = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let straight = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 straight.addOutcome(drawStraight, 1.0);
-let curved = new __WEBPACK_IMPORTED_MODULE_11__DrawingRule__["a" /* default */]();
+let curved = new __WEBPACK_IMPORTED_MODULE_11__lsystem_DrawingRule__["a" /* default */]();
 curved.addOutcome(drawCurved, 1.0);
 drawingRules.set('+', rotatePos);
 drawingRules.set('-', rotateNeg);
@@ -6132,9 +6133,9 @@ drawingRules.set('S', straight);
 drawingRules.set('C', curved);
 // Set up Turtle functions
 let turtleStack = [];
-let turtle = new __WEBPACK_IMPORTED_MODULE_9__Turtle__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, -2.8, 0), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 1, 0), 0);
+let turtle = new __WEBPACK_IMPORTED_MODULE_9__lsystem_Turtle__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, -2.8, 0), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 1, 0), 0);
 function pushTurtle() {
-    let temp = new __WEBPACK_IMPORTED_MODULE_9__Turtle__["a" /* default */](turtle.position, turtle.orientation, turtle.depth);
+    let temp = new __WEBPACK_IMPORTED_MODULE_9__lsystem_Turtle__["a" /* default */](turtle.position, turtle.orientation, turtle.depth);
     turtleStack.push(temp);
     turtle.depth += 1;
 }
@@ -6144,7 +6145,16 @@ function popTurtle() {
     turtle.orientation = temp.orientation;
     turtle.depth -= 1;
 }
+function insidePot(position) {
+    return position[0] > -1 && position[0] < -1 && position[1] > -3.4 && position[1] < -2.4;
+}
+function underWood(position) {
+    return position[0] > -4.5 && position[0] < 4.5 && position[1] < -3.4;
+}
 function pushBranch(scale) {
+    if (insidePot(turtle.position) || underWood(turtle.position)) {
+        return;
+    }
     // Calculate transformation
     let transform = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* mat4 */].create();
     let q = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* quat */].create();
@@ -6163,11 +6173,17 @@ function pushBranch(scale) {
     bcount++;
 }
 function drawStraight() {
+    if (insidePot(turtle.position) || underWood(turtle.position)) {
+        return;
+    }
     turtle.moveForward(0.25);
     pushBranch(__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0.15 - turtle.depth * 0.04, 0.25, 0.15 - turtle.depth * 0.04));
 }
 function drawCurved() {
     for (let i = 0; i < 4; i++) {
+        if (insidePot(turtle.position) || underWood(turtle.position)) {
+            return;
+        }
         turtle.moveForward(0.1);
         turtle.rotate(5, 0, -5);
         turtle.moveForward(0.1);
@@ -6188,7 +6204,7 @@ function rotateTurtleNeg() {
     turtle.rotate(0, -controls.angle, -controls.angle);
 }
 function putFruit() {
-    if (turtle.depth < 3) {
+    if (turtle.depth < 3 || underWood(turtle.position) || insidePot(turtle.position)) {
         return;
     }
     let scale = -0.5 / (2 - turtle.depth);
@@ -6209,6 +6225,9 @@ function putFruit() {
     fcount++;
 }
 function putLeaf() {
+    if (underWood(turtle.position) || insidePot(turtle.position)) {
+        return;
+    }
     let transform = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* mat4 */].create();
     __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* mat4 */].fromTranslation(transform, turtle.position);
     let q = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* quat */].create();
@@ -6241,7 +6260,29 @@ function createMeshes() {
     soil.create();
     wood.create();
 }
+let axioms;
 function loadScene() {
+    // Initial grammar
+    let str = 'SSSF';
+    axioms = [str];
+    // Expand the grammar
+    for (let i = 0; i < 6; i++) {
+        let newstr = '';
+        for (let j = 0; j < str.length; j++) {
+            let result = expansionRules.get(str.charAt(j));
+            if (result) {
+                newstr += result.getOutcome();
+            }
+            else {
+                newstr += str.charAt(j);
+            }
+        }
+        axioms.push(newstr);
+        str = newstr;
+    }
+    drawGrammar();
+}
+function drawGrammar() {
     // Reset turtle
     turtle.position = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, -2.8, 0);
     turtle.orientation = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["d" /* vec3 */].fromValues(0, 1, 0);
@@ -6266,25 +6307,9 @@ function loadScene() {
     leafTCol3Array = [];
     leafTCol4Array = [];
     leafColorsArray = [];
-    // Initial grammar
-    let str = 'SSSF';
-    // Expand the grammar
-    for (let i = 0; i < controls.iterations; i++) {
-        let newstr = '';
-        for (let j = 0; j < str.length; j++) {
-            let result = expansionRules.get(str.charAt(j));
-            if (result) {
-                newstr += result.getOutcome();
-            }
-            else {
-                newstr += str.charAt(j);
-            }
-        }
-        str = newstr;
-    }
-    // Draw based on final grammar
-    for (let i = 0; i < str.length; i++) {
-        let func = drawingRules.get(str.charAt(i)).getOutcome();
+    // Draw based on grammar
+    for (let i = 0; i < axioms[controls.iterations].length; i++) {
+        let func = drawingRules.get(axioms[controls.iterations].charAt(i)).getOutcome();
         if (func) {
             func();
         }
@@ -6315,7 +6340,7 @@ function loadScene() {
     pot.setNumInstances(1);
     soil.setInstanceVBOs(new Float32Array([2.7, 0, 0, 0]), new Float32Array([0, .1, 0, 0]), new Float32Array([0, 0, 2.7, 0]), new Float32Array([0, -2.5, 0, 1]), new Float32Array([43. / 255., 26. / 255., 3. / 255., 1]));
     soil.setNumInstances(1);
-    wood.setInstanceVBOs(new Float32Array([4, 0, 0, 0]), new Float32Array([0, 0.2, 0, 0]), new Float32Array([0, 0, 4, 0]), new Float32Array([0, -4.2, 0, 1]), new Float32Array([1, 1, 1, 1]));
+    wood.setInstanceVBOs(new Float32Array([10, 0, 0, 0]), new Float32Array([0, 0.2, 0, 0]), new Float32Array([0, 0, 4, 0]), new Float32Array([0, -4.2, 0, 1]), new Float32Array([1, 1, 1, 1]));
     wood.setNumInstances(1);
 }
 let old_angle = 15;
@@ -6334,6 +6359,7 @@ function main() {
     gui.add(controls, 'angle', 0, 30).step(1);
     gui.add(controls, 'iterations', 0, 6).step(1);
     gui.addColor(controls, 'fruit_color');
+    gui.add(controls, 'Generate');
     // get canvas and webgl context
     const canvas = document.getElementById('canvas');
     const gl = canvas.getContext('webgl2');
@@ -6365,7 +6391,7 @@ function main() {
     // This function will be called every frame
     function tick() {
         if (old_angle != controls.angle || old_iterations != controls.iterations) {
-            loadScene();
+            drawGrammar();
             old_angle = controls.angle;
             old_iterations = controls.iterations;
         }
